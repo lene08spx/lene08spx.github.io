@@ -1,0 +1,68 @@
+<!DOCTYPE html> 
+<html>
+<body>
+
+    <input type="number" oninput="runPerm(this);"/>
+    <script>
+
+/** https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/sets/permutations/permutateWithoutRepetitions.js
+@param {*[]} permutationOptions @return {*[]} */
+function permutateWithoutRepetitions(permutationOptions) {
+    if (permutationOptions.length <= 1) return [permutationOptions];
+    const permutations = [];
+    const smallerPermutations = permutateWithoutRepetitions(permutationOptions.slice(1));
+    const firstOption = permutationOptions[0];
+    for (let permIndex = 0; permIndex < smallerPermutations.length; permIndex += 1) {
+        const smallerPermutation = smallerPermutations[permIndex];
+        // Insert first option into every possible position of smallerPermutation.
+        for (let positionIndex = 0; positionIndex <= smallerPermutation.length; positionIndex += 1) {
+            const permutationPrefix = smallerPermutation.slice(0, positionIndex);
+            const permutationSuffix = smallerPermutation.slice(positionIndex);
+            permutations.push(permutationPrefix.concat([firstOption], permutationSuffix));
+        }
+    }
+    return permutations;
+}
+function permutateWithRepetitions(permutationOptions, permutationLength = permutationOptions.length) {
+  if (permutationLength === 1) {
+    return permutationOptions.map(permutationOption => [permutationOption]);
+  } else if (permutationLength <= 0) return [];
+  const permutations = [];
+  const smallerPermutations = permutateWithRepetitions(permutationOptions,permutationLength-1);
+  permutationOptions.forEach((currentOption) => {
+    smallerPermutations.forEach((smallerPermutation) => {
+      permutations.push([currentOption].concat(smallerPermutation));
+    });
+  }); return permutations;
+}
+
+function runPerm(element=HTMLInputElement.prototype) {
+    let inp = element.value.split("");
+    let numberPerms = permutateWithoutRepetitions(inp.map(v=>{return Number(v)}));
+    let operatorPerms = permutateWithRepetitions(["+","-","*","/"],inp.length-1);
+    let evals = {};
+    //console.log(numberPerms);
+    //console.log(operatorPerms);
+    for (let nPerm of numberPerms) {
+        for (let oPerm of operatorPerms) {
+            let compString = "";
+            let i=0;
+            for (i=0;i<inp.length-1;i++) {
+                compString += nPerm[i];
+                compString += oPerm[i];
+            }
+            compString += nPerm.slice(-1);
+            let number = Number(eval(compString));
+            if (Object.keys(evals).indexOf(number) > -1) {
+                evals[number].push(compString);
+            } else {
+                evals[number] = [compString];
+            }
+            //evals.push(compString);
+        }
+    }
+    console.log(evals);
+}
+    </script>
+</body>
+</html>

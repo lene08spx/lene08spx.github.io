@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ninjas!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Knewave');
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: black;
+            margin: 0;
+        }
+        h1 {
+            color: white;
+            font-family: 'Knewave', 'Segoe UI', sans-serif;
+            font-size: 7em;
+            font-weight: 100;
+            text-align: center;
+        }
+        h2 {
+            color: white;
+            font-family: 'Knewave', 'Segoe UI', sans-serif;
+            font-size: 2em;
+            font-weight: 100;
+            text-align: center;
+        }
+        #ninjaNumber {
+            display: block;
+            border: 5px solid rgb(29, 119, 126);
+            background-color: black;
+            color: white;
+            border-radius: 50px;
+            font-family: Cambria, serif;
+            font-size: 100px;
+            width: 60%;
+            padding: 20px;
+            text-align: center;
+            margin: 0 20%;
+            outline: none;
+        }
+        #itemCont {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+            margin: 0;
+            padding: 50px;
+        }
+        #ninjas, #winner {
+            display: block;
+            color: white;
+            font-family: 'Knewave', 'Segoe UI', sans-serif;
+            font-size: 6em;
+            font-weight: 100;
+            text-align: center;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Ninjas Problem</h1>
+    <input id="ninjaNumber" type="number" oninput="getNinja(this.value)" />
+    <div id="itemCont">
+        <h2>Number of Ninjas</h2>
+        <div id="ninjas"></div>
+    </div>
+    <div id="itemCont">
+        <h2>Surviving Ninja</h2>
+        <div id="winner"></div>
+    </div>
+</body>
+<script>
+    //let listDiv = document.getElementById("lis");
+    function getNinja(inputVal) {
+        let numOfNinjas = Number(inputVal) || 1
+        let ninjas = 1;
+        let winner = 1;
+        while (ninjas < numOfNinjas) {
+            if (winner == ninjas) winner = 1;
+            else winner += 2;
+            ninjas++;
+        }
+        document.getElementById("ninjas").textContent = String(ninjas);
+        document.getElementById("winner").textContent = "# "+String(winner);
+    }
+</script>
+</html>
