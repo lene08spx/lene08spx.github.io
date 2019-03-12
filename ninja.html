@@ -141,6 +141,7 @@
     <p style="padding-top: 100px;">(C) 2019 Oliver Lenehan</p>
 </body>
 <script>
+    document.getElementById("winner").innerHTML = "&nbsp;";
     // Yay! Documentation finally!
 
     // Yes, it's obsurd golf; I know. But hey, maybe optimised?
@@ -163,10 +164,11 @@
     };
     function getNinja() {
         let inputVal = document.getElementById("numberEntry").value;
-        inputVal = parseInt(inputVal) || 1; // This makes sure the input is an integer and a number.
-        if (inputVal < 1) inputVal = 1;
-        
-        if (document.getElementById("ninjaMethodFunction").checked) {
+        inputVal = parseInt(inputVal) || 0; // This makes sure the input is an integer and a number.
+        if (inputVal < 1) {
+            document.getElementById("winner").innerHTML = "&nbsp;";
+        }
+        else if (document.getElementById("ninjaMethodFunction").checked) {
             //document.getElementById("ninjas").textContent = String(inputVal);
             document.getElementById("winner").textContent = String(f(inputVal));
         }
