@@ -3,88 +3,150 @@
 <head>
     <title>Ninjas!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Knewave');
+        /*@import url('https://fonts.googleapis.com/css?family=Knewave');*/
         * {
             box-sizing: border-box;
         }
+        html {
+            background-color: rgb(29, 62, 105);
+        }
         body {
-            background-color: black;
-            margin: 0;
+            margin: 0 auto;
+            padding: 10px 30px;
+            width: 1200px;
+            color: black;
+            background-color: #EEE;
+            font-family: 'Cambria', sans-serif;
+            box-shadow: 0px 5px 20px 2px black;
         }
         h1 {
-            color: white;
-            font-family: 'Knewave', 'Segoe UI', sans-serif;
-            font-size: 7em;
-            font-weight: 100;
+            margin: 0;
+            padding: 10px;
             text-align: center;
+            font-size: 5em;
+            font-weight: 900;
         }
         h2 {
-            color: white;
-            font-family: 'Knewave', 'Segoe UI', sans-serif;
-            font-size: 2em;
-            font-weight: 100;
+            margin: 0;
+            padding: 10px;
             text-align: center;
+            font-size: 2.1em;
+            font-weight: 600;
         }
-        #ninjaNumber {
+        h3 {
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.7em;
+        }
+        hr {
+            border: 4px solid rgb(49, 138, 255);
+            margin: 15px 0px;
+        }
+        #numberEntry {
             display: block;
             border: 5px solid rgb(29, 119, 126);
-            background-color: black;
-            color: white;
-            border-radius: 50px;
+            font-weight: 900;
+            border-radius: 10px;
             font-family: Cambria, serif;
-            font-size: 100px;
-            width: 60%;
-            padding: 20px;
+            font-size: 7em;
+            width: 100%;
+            padding: 10px;
             text-align: center;
-            margin: 0 20%;
+            margin: 0;
             outline: none;
         }
-        #itemCont {
+        #halfContainer {
             float: left;
             width: 50%;
             overflow: hidden;
             margin: 0;
             padding: 50px;
+            padding-top: 0;
         }
         #ninjas, #winner {
             display: block;
-            color: white;
-            font-family: 'Knewave', 'Segoe UI', sans-serif;
             font-size: 6em;
-            font-weight: 100;
+            font-weight: 900;
             text-align: center;
-            height: 150px;
         }
         #info {
+            font-size: 1.3em;
+        }
+        #divNinjaMethod {
+            margin: 20px auto;
+            text-align: center;
+        }
+        input[type=radio] + label {
+            font-style: italic;
+        } 
+        input[type=radio]:checked + label {
+            border-bottom: 2px solid black;
+        } 
+        #equationImg {
+            width: 50%;
+            margin: 0 auto;
             display: block;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
+        }
+        figure {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>The Ninjas Problem</h1>
-    <input id="ninjaNumber" type="number" oninput="getNinja(this.value)" />
-    <div id="itemCont">
-        <h2>Number of Ninjas</h2>
-        <div id="ninjas"></div>
-    </div>
-    <div id="itemCont">
+    <div id="docPage">
+        <h1>The Ninjas Problem</h1>
+        <hr>
+        
+        <h2>Enter the number of Ninjas:</h2>
+        <input id="numberEntry" type="number" oninput="getNinja()" />
+
+        <div id="divNinjaMethod">
+            <h3>
+                <input id="ninjaMethodFunction" name="ninjaMethod" type="radio" onclick="getNinja()" checked />
+                <label for="ninjaMethodFunction">Compute using <strong>Function</strong> (Very Fast)</label>
+            </h3>
+            <h3>
+                <input id="ninjaMethodSequence" name="ninjaMethod" type="radio" onclick="getNinja()" />
+                <label for="ninjaMethodSequence">Compute using <strong>Sequence</strong> (Very Slow)</label>
+            </h3>
+        </div>
+
+        <hr>
+        <!--<div id="halfContainer">
+            <h2>Number of Ninjas</h2>
+            <div id="ninjas"></div>
+        </div>
+        <div id="halfContainer">
+            <h2>Surviving Ninja</h2>
+            <div id="winner"></div>
+        </div>-->
         <h2>Surviving Ninja</h2>
         <div id="winner"></div>
+
+        <hr>
+        <div id="info">
+            Here's some interesting things to note:<br/>
+            <ul>
+                <li>In the sequence, the odd numbers "reset" when the last one was equal to the sequence number.</li>
+                <li>Every 2^n number is equal to one.</li>
+                <li>Every (2^n)-1 number is equal to itself.</li>
+            </ul>
+            <figure>
+                <figcaption>The Equation Itself:</figcaption>
+                <img id="equationImg" src="ninja_img.jpg" alt="f of x equals, 2 x, minus 2 to the power of one plus the floor of log base 2 of x, plus 1"/>
+            </figure>
+        </div>
     </div>
-    <div id="info">
-        Here's some interesting things to note:<br/>
-        <ul>
-            <li>In the sequence, the odd numbers "reset" when the last one was equal to the sequence number.</li>
-            <li>Every 2^n number is equal to one.</li>
-            <li>Every (2^n)-1 number is equal to itself.</li>
-        </ul>
-    </div>
+    <p style="padding-top: 100px;">(C) 2019 Oliver Lenehan</p>
 </body>
 <script>
-    //let listDiv = document.getElementById("lis");
-    function getNinja(inputVal) {
+    // Yay! Documentation finally!
+
+    // Yes, it's obsurd golf; I know. But hey, maybe optimised?
+    g=a=>{for(b=c=1;b<a;c=c-b++?c+2:1);return c};
+        /* Here is the original sequence algorithm I came up with.
+        
         let numOfNinjas = Number(inputVal) || 1
         let ninjas = 1;
         let winner = 1;
@@ -92,9 +154,26 @@
             if (winner == ninjas) winner = 1;
             else winner += 2;
             ninjas++;
+        }*/
+
+    // Some more beautifully horrible code.
+    // I really need some help with code formatting.
+    function f(x){
+        return ( (2 * x) - Math.pow(2, (Math.floor(Math.log2(x)) + 1)) + 1 );
+    };
+    function getNinja() {
+        let inputVal = document.getElementById("numberEntry").value;
+        inputVal = parseInt(inputVal) || 1; // This makes sure the input is an integer and a number.
+        if (inputVal < 1) inputVal = 1;
+        
+        if (document.getElementById("ninjaMethodFunction").checked) {
+            //document.getElementById("ninjas").textContent = String(inputVal);
+            document.getElementById("winner").textContent = "# "+String(f(inputVal));
         }
-        document.getElementById("ninjas").textContent = String(ninjas);
-        document.getElementById("winner").textContent = "# "+String(winner);
+        else {
+            //document.getElementById("ninjas").textContent = String(inputVal);
+            document.getElementById("winner").textContent = "# "+String(g(inputVal));
+        }
     }
 </script>
 </html>
