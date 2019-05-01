@@ -1,0 +1,140 @@
+/*
+(C) 2019 Oliver Lenehan
+*/
+
+@charset "UTF-8";
+
+@font-face {
+    font-family: "opensans-regular";
+    src: url('./font/opensans-regular.ttf') format('truetype');
+    text-decoration: none;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "ptserif-regular";
+    src: url('./font/ptserif-regular.ttf') format('truetype');
+    text-decoration: none;
+    font-style: normal;
+}
+
+:root {
+    box-sizing: border-box;
+    --colour-bg: #1D3E69;
+    --colour-page: #EEEEEE;
+    --colour-text: #000000;
+	--colour-hl: #318AFF;
+    --font: "opensans-regular", sans-serif;
+    --font-body: "ptserif-regular", serif;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html {
+    background-color: var(--colour-bg);
+}
+
+body {
+	width: 1000px;
+	margin: 20px auto;
+	padding: 0;
+	/*border-top: 25px solid var(--colour-hl);*/
+    background-color: var(--colour-page);
+    box-shadow: 0px 5px 20px 2px black;
+}
+
+header {
+    padding: 20px 20px;
+    background-color: var(--colour-hl);
+}
+.pageTitle {
+	margin: 0;
+    color: white;
+}
+
+hr {
+	border: none;
+    border-top: 5px solid var(--colour-hl);
+    width: 100%;
+}
+
+h1 {
+    display: block;
+	margin: 0;
+	text-align: left;
+	font-family: var(--font);
+	font-size: 50px;
+    font-weight: 700;
+}
+
+h2 {
+    display: block;
+	margin: 0;
+	text-align: left;
+	font-family: var(--font);
+	font-size: 35px;
+    font-weight: 700;
+}
+
+h3 {
+    display: block;
+	margin: 0;
+	text-align: left;
+	font-family: var(--font);
+	font-size: 25px;
+    font-weight: normal;
+}
+
+#mainContent {
+    padding: 0 20px 20px 20px;
+}
+#mainContent > * {
+	margin: 0;
+	margin-top: 20px;
+}
+
+.light {
+    color: #FFFFFF;
+}
+.dark {
+    color: #000000
+}
+.left {
+    text-align: left;
+}
+.centre {
+    text-align: center;
+}
+
+
+.cardContainer {
+    user-select: none;
+}
+.card {
+    display: inline-block;
+    position: relative;
+    width: 30%;
+    margin: 0 1.5%;
+    height: 300px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 1px 5px 0px #000000;
+    transform: scale(1);
+    transition: transform 0.05s linear;
+}
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+.card > a {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.card > h3 {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+}
